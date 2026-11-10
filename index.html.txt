@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocolo Secreto: Operación Osita</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d0f18 0%, #1a0f1f 100%);
+            color: #f0f0f5;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 15px;
+            position: relative;
+        }
+
+        /* FONDO ANIMADO DE CORAZONES FLOTANTES */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -20px;
+            color: rgba(255, 51, 102, 0.3);
+            font-size: 1.5rem;
+            animation: floatUp 6s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 650px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Pantalla de Bloqueo / Contraseña */
+        #lock-screen {
+            background: rgba(25, 20, 35, 0.85);
+            border: 1px solid #ff3366;
+            padding: 35px 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.25);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* Estilo de los ositos */
+        .bears-art {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            animation: pulseBears 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseBears {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #ff4d79;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 0.95rem;
+            color: #c0c5d0;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            background: #0d0f18;
+            border: 1px solid #3d2f48;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="password"]:focus {
+            border-color: #ff3366;
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.3);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff3366, #ff6b8b);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+            box-shadow: 0 4px 15px rgba(255, 51, 102, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:hover {
+            opacity: 0.95;
+        }
+
+        #error-msg {
+            color: #ff5c5c;
+            font-size: 0.85rem;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* Contenido Secreto (Oculto inicialmente) */
+        #secret-content {
+            display: none;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .card {
+            background: rgba(25, 20, 35, 0.85);
+            border: 1px solid #3d2f48;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .counter {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.3rem;
+            color: #ff8fa3;
+            margin: 15px 0;
+        }
+
+        .love-note {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            text-align: left;
+            background: rgba(13, 15, 24, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid #ff3366;
+        }
+
+        /* REPRODUCTOR DE MÚSICA */
+        .music-player {
+            background: rgba(13, 15, 24, 0.6);
+            border: 1px solid #ff3366;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .music-player span {
+            font-size: 0.85rem;
+            color: #ff8fa3;
+        }
+
+        .music-player audio {
+            width: 65%;
+            height: 35px;
+        }
+
+        /* ESTILOS DE LA GALERÍA */
+        .gallery-section h2 {
+            color: #ff6b8b;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            aspect-ratio: 1/1;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-danger-warning {
+            background: linear-gradient(135deg, #7c2d12, #b91c1c);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(185, 28, 28, 0.4);
+            border: 1px solid #f87171;
+            margin-top: 10px;
+            white-space: normal;
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 10px; }
+            .card { padding: 15px; }
+            .love-note { padding: 15px; font-size: 0.9rem; }
+            .image-gallery { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+            .music-player { flex-direction: column; gap: 8px; text-align: center; }
+            .music-player audio { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo de corazones flotantes animados -->
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <div class="container">
+        <!-- PANTALLA DE ACCESO -->
+        <div id="lock-screen">
+            <div class="bears-art">🧸❤️🐻</div>
+            <h1>Área Exclusiva de mi Osita</h1>
+            <p>Introduce nuestra clave secreta para descifrar este mensaje de amor:</p>
+            <input type="password" id="password-input" placeholder="Escribe la clave aquí...">
+            <button onclick="checkPassword()">Desbloquear Corazón</button>
+            <div id="error-msg">Clave incorrecta, mi amor. Pista: Es lo hermosa que eres ("mibelladulzura")... ❤️</div>
+        </div>
+
+        <!-- CONTENIDO SECRETO -->
+        <div id="secret-content">
+            <div class="card">
+                <div class="bears-art" style="font-size: 2.5rem;">🐾💖✨</div>
+                <h1>¡Hola, mi bella dulzura!</h1>
+                <div class="counter" id="time-counter">Calculando tiempo...</div>
+            </div>
+
+            <!-- REPRODUCTOR DE MÚSICA LOCAL (PIANO) -->
+            <div class="music-player">
+                <span>🎵 River Flows in You:</span>
+                <audio controls loop>
+                    <source src="piano.mp3" type="audio/mpeg">
+                    Tu navegador no soporta audio.
+                </audio>
+            </div>
+
+            <div class="card">
+                <div class="love-note">
+                    Mi amor recuerdas el primer momento en que te bese, tu y yo juntos a la orilla del mar, escuchando el ruido del agua, el silencio de la noche, el tocar mi palma de mi mano con la tuya, abrazarte y besarte con amor, por que sabía lo que quería contigo, te amo desde un principio, te respeto y te seguiría siendo fiel mi amor, hemos pasado muchos momentos lindos y se que podemos seguir viniendo muchos mas, te amo no lo olvides agarre fuerte de mi mano y avancemos juntos ❤️
+                </div>
+            </div>
+
+            <!-- GALERÍA CON NOMBRES CORTOS Y SEGUROS -->
+            <div class="card gallery-section">
+                <h2>Nuestros Momentos Inolvidables ❤️</h2>
+                <div class="image-gallery">
+                    <div class="gallery-item"><img src="img0.jpg" alt="Recuerdo 1"></div>
+                    <div class="gallery-item"><img src="img1.jpg" alt="Recuerdo 2"></div>
+                    <div class="gallery-item"><img src="img2.jpg" alt="Recuerdo 3"></div>
+                    <div class="gallery-item"><img src="img3.jpg" alt="Recuerdo 4"></div>
+                    <div class="gallery-item"><img src="img4.jpg" alt="Recuerdo 5"></div>
+                    <div class="gallery-item"><img src="img5.jpg" alt="Recuerdo 6"></div>
+                    <div class="gallery-item"><img src="img6.jpg" alt="Recuerdo 7"></div>
+                    <div class="gallery-item"><img src="img7.jpg" alt="Recuerdo 8"></div>
+                    <div class="gallery-item"><img src="img8.jpg" alt="Recuerdo 9"></div>
+                    <div class="gallery-item"><img src="img9.jpg" alt="Recuerdo 10"></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <p style="margin-bottom: 12px; font-size: 0.9rem; color: #ff8fa3;">¿Lista para el siguiente nivel?</p>
+                <button class="btn-danger-warning" onclick="triggerSurprise()">
+                    ⚠️ Alerta: no presiones aquí si no quieres seguir siendo feliz por tu osito
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GENERADOR DE CORAZONES FLOTANTES EN EL FONDO
+        function createHeart() {
+            const container = document.getElementById('hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = ['❤️', '💖', '🧸', '✨', '🌹'][Math.floor(Math.random() * 5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 500);
+
+        // CONTRASEÑA CONFIGURADA
+        const correctPassword = "mibelladulzura"; 
+
+        // FECHA DE INICIO: 20 de Abril de 2026
+        const startDate = new Date(2026, 3, 20, 0, 0, 0); 
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim().toLowerCase();
+            const errorMsg = document.getElementById('error-msg');
+            const lockScreen = document.getElementById('lock-screen');
+            const secretContent = document.getElementById('secret-content');
+
+            if (input === correctPassword) {
+                lockScreen.style.display = 'none';
+                secretContent.style.display = 'block';
+                startCounter();
+            } else {
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function startCounter() {
+            function update() {
+                const now = new Date();
+                const diff = now - startDate;
+
+                if (diff < 0) {
+                    document.getElementById('time-counter').innerText = "¡Contando cada segundo hacia nuestro gran amor!";
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutes = Math.floor((diff / 1000 / 60) % 60);
+                const seconds = Math.floor((diff / 1000) % 60);
+
+                document.getElementById('time-counter').innerText = 
+                    `${days} días, ${hours}h ${minutes}m ${seconds}s juntos ❤️`;
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        function triggerSurprise() {
+            alert("🍷✨ ¡Sorpresa! Tenemos una cita este fin de semana a la orilla del mar, tu y yo y una botella de vino, botanas y mucho amor y sonrisas, te amo ❤️🐻");
+        }
+    </script>
+</body>
+</html>
