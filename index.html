@@ -287,10 +287,10 @@
                 <div class="counter" id="time-counter">Calculando tiempo...</div>
             </div>
 
-            <!-- REPRODUCTOR DE MÚSICA DE PIANO ESTABLE -->
+            <!-- REPRODUCTOR DE MÚSICA CONFIGURADO PARA TRANSMISIÓN DIRECTA -->
             <div class="music-player">
-                <span>🎵 Piano Romántico para ti:</span>
-                <audio controls loop>
+                <span>🎵 Piano Romántico:</span>
+                <audio controls preload="auto" crossorigin="anonymous">
                     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-piano-112140.mp3" type="audio/mpeg">
                     Tu navegador no soporta audio.
                 </audio>
@@ -298,24 +298,24 @@
 
             <div class="card">
                 <div class="love-note">
-                    Mi amor recuerdas el primer momento en que te bese, tu y yo juntos a la orilla del mar, escuchando el ruido del agua, el silencio de la noche, el tocar mi palma de mi mano con la tuya, abrazarte y besarte con amor, por que sabía lo que quería contigo, te amo desde un principio, te respeto y te seguiría siendo fiel mi amor, hemos pasado muchos momentos lindos y se que podemos seguir viniendo muchos mas, te amo no lo olvides agarre fuerte de mi mano y avancemos juntos ❤️
+                    Mi amor recuerdas el primer momento en que te bese, tu y yo juntos a la orilla del mar, escuchando el ruido del agua, el silencio de la noche, el tocar mi palma de mi mano con la tuya, abrazarte y besarte con amor, por que sabía lo que quería contigo, te amo desde un principio, te respeto y te seguiría siendo fiel mi amor, hemos pasado muchos momentos lindos y se que podemos seguir viviendo muchos mas, te amo no lo olvides agarrate fuerte de mi mano y avancemos juntos ❤️
                 </div>
             </div>
 
-            <!-- GALERÍA CORREGIDA (IMAGEN 4 COMO PNG Y LAS DEMÁS COMO JPG) -->
+            <!-- GALERÍA DE FOTOS (TODAS APUNTANDO A JPG PARA EVITAR ERRORES) -->
             <div class="card gallery-section">
                 <h2>Nuestros Momentos Inolvidables ❤️</h2>
                 <div class="image-gallery">
-                    <div class="gallery-item"><img src="img0.jpg" alt="Recuerdo 1"></div>
-                    <div class="gallery-item"><img src="img1.jpg" alt="Recuerdo 2"></div>
-                    <div class="gallery-item"><img src="img2.jpg" alt="Recuerdo 3"></div>
-                    <div class="gallery-item"><img src="img3.png" alt="Recuerdo 4"></div>
-                    <div class="gallery-item"><img src="img4.jpg" alt="Recuerdo 5"></div>
-                    <div class="gallery-item"><img src="img5.jpg" alt="Recuerdo 6"></div>
-                    <div class="gallery-item"><img src="img6.jpg" alt="Recuerdo 7"></div>
-                    <div class="gallery-item"><img src="img7.jpg" alt="Recuerdo 8"></div>
-                    <div class="gallery-item"><img src="img8.jpg" alt="Recuerdo 9"></div>
-                    <div class="gallery-item"><img src="img9.jpg" alt="Recuerdo 10"></div>
+                    <div class="gallery-item"><img src="img0.jpg" alt="Recuerdo 1" onerror="this.src='img0.png'"></div>
+                    <div class="gallery-item"><img src="img1.jpg" alt="Recuerdo 2" onerror="this.src='img1.png'"></div>
+                    <div class="gallery-item"><img src="img2.jpg" alt="Recuerdo 3" onerror="this.src='img2.png'"></div>
+                    <div class="gallery-item"><img src="img3.jpg" alt="Recuerdo 4" onerror="this.src='img3.png'"></div>
+                    <div class="gallery-item"><img src="img4.jpg" alt="Recuerdo 5" onerror="this.src='img4.png'"></div>
+                    <div class="gallery-item"><img src="img5.jpg" alt="Recuerdo 6" onerror="this.src='img5.png'"></div>
+                    <div class="gallery-item"><img src="img6.jpg" alt="Recuerdo 7" onerror="this.src='img6.png'"></div>
+                    <div class="gallery-item"><img src="img7.jpg" alt="Recuerdo 8" onerror="this.src='img7.png'"></div>
+                    <div class="gallery-item"><img src="img8.jpg" alt="Recuerdo 9" onerror="this.src='img8.png'"></div>
+                    <div class="gallery-item"><img src="img9.jpg" alt="Recuerdo 10" onerror="this.src='img9.png'"></div>
                 </div>
             </div>
 
@@ -386,7 +386,7 @@
         }
 
         function triggerSurprise() {
-            alert("🍷✨ ¡Sorpresa! ESTE FIN ERES MIA.........TU Y YO VAMOS A MEJORAR Y SEREMOS MUY FELICES, NO LO DUDES TE AMO.... ❤️🐻");
+            alert("🍷✨ ¡Sorpresa! Tenemos una cita este fin de semana a la orilla del mar, tu y yo y una botella de vino, botanas y mucho amor y sonrisas, te amo ❤️🐻");
         }
     </script>
 </body>
